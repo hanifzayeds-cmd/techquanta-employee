@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Portal | TechQuanta</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h2>TechQuanta <span class="highlight">Hall of Excellence</span></h2>
+        <button id="logoutBtn" style="display: none;" class="btn-secondary" style="width:auto; padding: 10px 20px;">Logout</button>
+    </nav>
+
+    <div class="container" id="loginSection">
+        <div class="glass-panel centered-panel">
+            <h3>Intern Login</h3>
+            <p class="subtitle">Use the credentials provided by Management.</p>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password">
+            <button id="loginBtn" class="btn-primary">View My Legacy</button>
+        </div>
+    </div>
+
+    <div class="container" id="dashboardSection" style="display: none;">
+        <div class="glass-panel" style="margin-bottom: 30px; text-align: center;">
+            <h1 id="welcomeText" style="font-size: 2rem; margin-bottom: 10px;">Welcome.</h1>
+            <p style="font-size: 1.1rem; color: var(--text-secondary);">Total Badges Earned: <strong id="badgeCount" style="color: white; font-size: 1.5rem;">0</strong></p>
+        </div>
+
+        <h3 style="border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Your Live Showcase</h3>
+        <div class="badge-grid" id="badgeContainer">
+            </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
