@@ -3,36 +3,527 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intern Portal | TechQuanta</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Intern Portal | TechQuanta Hall of Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #0f172a 50%, #1a1a3e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 201, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(146, 254, 157, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .navbar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 3rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 201, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #00C9FF, #92FE9D);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 71, 71, 0.2);
+            border-color: rgba(255, 71, 71, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            position: relative;
+            z-index: 5;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 201, 255, 0.15);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(0, 201, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 201, 255, 0.1);
+        }
+
+        .centered-panel {
+            max-width: 450px;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00C9FF;
+            box-shadow: 0 0 0 3px rgba(0, 201, 255, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00C9FF, #92FE9D);
+            color: #0a0e27;
+            box-shadow: 0 4px 15px rgba(0, 201, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 201, 255, 0.4);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #00C9FF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .badge-count {
+            display: inline-block;
+            background: rgba(0, 201, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            margin-top: 1rem;
+        }
+
+        .badge-count strong {
+            font-size: 2rem;
+            color: #00C9FF;
+            margin-right: 0.5rem;
+        }
+
+        /* Badge Grid */
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .badge-card {
+            animation: popIn 0.5s ease forwards;
+            transition: transform 0.3s ease;
+        }
+
+        .badge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .badge-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 1rem;
+        }
+
+        .tier-rising-star .badge-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .tier-excellence .badge-icon {
+            background: linear-gradient(135deg, #00C9FF, #92FE9D);
+            box-shadow: 0 0 20px rgba(0, 201, 255, 0.3);
+        }
+
+        .tier-legend .badge-icon {
+            background: linear-gradient(135deg, #8E2DE2, #4A00E0);
+            box-shadow: 0 0 20px rgba(142, 45, 226, 0.4);
+        }
+
+        .b-title {
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .b-date {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-bottom: 0.8rem;
+        }
+
+        .b-msg {
+            font-style: italic;
+            color: #cbd5e1;
+            margin: 1rem 0;
+            padding-left: 0.75rem;
+            border-left: 3px solid #00C9FF;
+        }
+
+        .b-impact {
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .b-awaits {
+            font-size: 0.8rem;
+            color: #00C9FF;
+            margin-top: 0.5rem;
+        }
+
+        /* Blackmark Section */
+        .blackmarks-section {
+            margin-top: 2rem;
+        }
+
+        .blackmark-card {
+            border-left: 4px solid #ff6b6b;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .blackmark-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .blackmark-severity {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .severity-minor { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .severity-moderate { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .severity-severe { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+        .blackmark-message {
+            color: #cbd5e1;
+            margin: 0.8rem 0;
+            padding-left: 0.75rem;
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 201, 255, 0.3), transparent);
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .container { padding: 0 1rem; }
+            .welcome-title { font-size: 1.8rem; }
+            .badge-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
-        <h2>TechQuanta <span class="highlight">Hall of Excellence</span></h2>
-        <button id="logoutBtn" style="display: none;" class="btn-secondary" style="width:auto; padding: 10px 20px;">Logout</button>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="tq.jpeg" alt="TechQuanta Logo" style="height: 40px; width: auto; border-radius: 8px;">
+            <h2>🏅 TechQuanta <span class="highlight">Hall of Excellence</span></h2>
+        </div>
+        <button id="logoutBtn" class="logout-btn" style="display: none;">🚪 Logout</button>
     </nav>
 
     <div class="container" id="loginSection">
         <div class="glass-panel centered-panel">
-            <h3>Intern Login</h3>
-            <p class="subtitle">Use the credentials provided by Management.</p>
+            <h3>🌟 Intern Login</h3>
+            <p class="subtitle">Access your achievements and feedback</p>
             <input type="email" id="email" placeholder="Email Address">
             <input type="password" id="password" placeholder="Password">
-            <button id="loginBtn" class="btn-primary">View My Legacy</button>
+            <button id="loginBtn" class="btn-primary">✨ View My Legacy</button>
         </div>
     </div>
 
     <div class="container" id="dashboardSection" style="display: none;">
-        <div class="glass-panel" style="margin-bottom: 30px; text-align: center;">
-            <h1 id="welcomeText" style="font-size: 2rem; margin-bottom: 10px;">Welcome.</h1>
-            <p style="font-size: 1.1rem; color: var(--text-secondary);">Total Badges Earned: <strong id="badgeCount" style="color: white; font-size: 1.5rem;">0</strong></p>
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="glass-panel">
+                <div class="welcome-title" id="welcomeText">Welcome, Intern.</div>
+                <div class="badge-count">
+                    <strong id="badgeCount">0</strong> Badges of Excellence
+                </div>
+            </div>
         </div>
 
-        <h3 style="border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Your Live Showcase</h3>
+        <!-- Badges Section -->
+        <div class="section-title">
+            <span>🏆</span> Your Achievements
+        </div>
         <div class="badge-grid" id="badgeContainer">
-            </div>
+            <p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">Your legacy begins soon. Awaiting your first badge.</p>
+        </div>
+
+        <hr>
+
+        <!-- Blackmarks Section -->
+        <div class="section-title">
+            <span>⚠️</span> Constructive Feedback
+        </div>
+        <div class="badge-grid" id="blackmarkContainer">
+            <p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">No feedback records. Keep up the great work!</p>
+        </div>
     </div>
 
-    <script type="module" src="app.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCFY5Bt8t8n8dAWuP_frYRJYfGmUaWuC4k",
+            authDomain: "techquantabadge.firebaseapp.com",
+            projectId: "techquantabadge",
+            storageBucket: "techquantabadge.firebasestorage.app",
+            messagingSenderId: "63842432321",
+            appId: "1:63842432321:web:9798d7270925e339fc5dc0",
+            measurementId: "G-3YWSBBQ792"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const badgeData = {
+            'rising-star': { title: 'Rising Star', icon: '⭐', class: 'tier-rising-star', impact: 'Your consistency and dedication are building a strong foundation.', awaits: "You're on a path that leads to something meaningful." },
+            'excellence': { title: 'Excellence', icon: '💎', class: 'tier-excellence', impact: 'You’ve gone beyond expectations and raised the bar.', awaits: "Something remarkable is taking shape for you." },
+            'legend': { title: 'Legend', icon: '👑', class: 'tier-legend', impact: 'Your contribution has left a lasting mark.', awaits: "A defining moment awaits you." }
+        };
+
+        const severityData = {
+            'minor': { label: 'Minor', icon: '🔵', class: 'severity-minor', text: 'Area needing attention — we believe in your growth.' },
+            'moderate': { label: 'Moderate', icon: '🟠', class: 'severity-moderate', text: 'Requires improvement — use this as motivation to excel.' },
+            'severe': { label: 'Severe', icon: '🔴', class: 'severity-severe', text: 'Serious concern — please address this promptly.' }
+        };
+
+        const loginSec = document.getElementById('loginSection');
+        const dashSec = document.getElementById('dashboardSection');
+        let badgeListener = null;
+        let blackmarkListener = null;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                loginSec.style.display = 'none';
+                dashSec.style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
+                
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if(userDoc.exists()) {
+                    document.getElementById('welcomeText').innerText = `✨ Welcome, ${userDoc.data().name}. ✨`;
+                }
+
+                // Badges Listener
+                const badgesQuery = query(collection(db, "awards"), where("userId", "==", user.uid));
+                badgeListener = onSnapshot(badgesQuery, (snapshot) => {
+                    const container = document.getElementById('badgeContainer');
+                    document.getElementById('badgeCount').innerText = snapshot.size;
+                    container.innerHTML = '';
+
+                    if (snapshot.empty) {
+                        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">Your legacy begins soon. Awaiting your first badge.</p>';
+                        return;
+                    }
+
+                    const awards = [];
+                    snapshot.forEach(doc => awards.push({ id: doc.id, ...doc.data() }));
+                    awards.sort((a, b) => b.timestamp - a.timestamp);
+
+                    awards.forEach((data) => {
+                        const bData = badgeData[data.badgeType];
+                        if (!bData) return;
+                        const date = new Date(data.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+                        container.innerHTML += `
+                            <div class="glass-panel badge-card ${bData.class}">
+                                <div class="badge-icon">${bData.icon}</div>
+                                <div class="b-title">${bData.title}</div>
+                                <div class="b-date">Awarded on ${date}</div>
+                                <div class="b-msg">"${escapeHtml(data.message)}"</div>
+                                <div class="b-impact"><strong>Your Impact:</strong><br/>${bData.impact}</div>
+                                <div class="b-awaits">🔒 ${bData.awaits}</div>
+                            </div>
+                        `;
+                    });
+                });
+
+                // Blackmarks Listener
+                const blackmarksQuery = query(collection(db, "blackmarks"), where("userId", "==", user.uid));
+                blackmarkListener = onSnapshot(blackmarksQuery, (snapshot) => {
+                    const container = document.getElementById('blackmarkContainer');
+                    container.innerHTML = '';
+
+                    if (snapshot.empty) {
+                        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">No feedback records. Keep up the great work!</p>';
+                        return;
+                    }
+
+                    const blackmarks = [];
+                    snapshot.forEach(doc => blackmarks.push({ id: doc.id, ...doc.data() }));
+                    blackmarks.sort((a, b) => b.timestamp - a.timestamp);
+
+                    blackmarks.forEach((data) => {
+                        const sData = severityData[data.severity];
+                        if (!sData) return;
+                        const date = new Date(data.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+                        container.innerHTML += `
+                            <div class="glass-panel badge-card blackmark-card">
+                                <div class="blackmark-header">
+                                    <span style="font-size: 1.5rem;">${sData.icon}</span>
+                                    <div>
+                                        <div class="b-title" style="font-size: 1.1rem;">${sData.label} Blackmark</div>
+                                        <div class="b-date">Issued on ${date}</div>
+                                    </div>
+                                    <span class="blackmark-severity ${sData.class}">${sData.label}</span>
+                                </div>
+                                <div class="blackmark-message">"${escapeHtml(data.message)}"</div>
+                                <div class="b-impact" style="border-top-color: rgba(255, 107, 107, 0.3);">
+                                    <strong>Growth Opportunity:</strong><br/>${sData.text}
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+
+            } else {
+                loginSec.style.display = 'block';
+                dashSec.style.display = 'none';
+                document.getElementById('logoutBtn').style.display = 'none';
+                if(badgeListener) badgeListener();
+                if(blackmarkListener) blackmarkListener();
+            }
+        });
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            try {
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+            } catch (e) { 
+                alert("Login failed. Please check your credentials. (" + e.message + ")"); 
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+    </script>
 </body>
 </html>
