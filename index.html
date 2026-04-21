@@ -6,6 +6,16 @@
     <title>Intern Portal | TechQuanta Hall of Excellence</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-base: #020617;
+            --bg-panel: rgba(15, 23, 42, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #00f2fe;
+            --accent-green: #4facfe;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,365 +24,252 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #0f172a 50%, #1a1a3e 100%);
+            background-color: var(--bg-base);
             min-height: 100vh;
-            color: #ffffff;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 201, 255, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(146, 254, 157, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .navbar {
+            color: var(--text-main);
+            overflow-x: hidden;
             position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 3rem;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 201, 255, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .navbar h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+        /* Ambient Animated Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            overflow: hidden; z-index: -1;
+            background: radial-gradient(circle at bottom left, #081229, #020617);
         }
+
+        .ambient-orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(90px); opacity: 0.3;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .orb-1 { top: -20%; right: -10%; width: 50vw; height: 50vw; background: #0c4a6e; }
+        .orb-2 { bottom: -10%; left: -20%; width: 60vw; height: 60vw; background: #164e63; animation-duration: 25s; animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-5%, -5%) scale(1.1); }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .navbar h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.5px; }
 
         .highlight {
-            background: linear-gradient(135deg, #00C9FF, #92FE9D);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .logout-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.6rem 1.5rem;
-            border-radius: 12px;
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 0.5rem 1.2rem; border-radius: 10px;
+            color: white; font-weight: 500; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 0.5rem;
         }
 
-        .logout-btn:hover {
-            background: rgba(255, 71, 71, 0.2);
-            border-color: rgba(255, 71, 71, 0.5);
-            transform: translateY(-2px);
-        }
+        .logout-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
-        .container {
-            position: relative;
-            z-index: 5;
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
         .glass-panel {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 201, 255, 0.15);
-            border-radius: 24px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+            background: var(--bg-panel);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-glass); border-radius: 20px;
+            padding: 2.5rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden;
         }
 
-        .glass-panel:hover {
-            border-color: rgba(0, 201, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 201, 255, 0.1);
+        .glass-panel::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
         }
 
-        .centered-panel {
-            max-width: 450px;
-            margin: 4rem auto;
-            text-align: center;
+        .centered-panel { max-width: 400px; margin: 12vh auto; text-align: center; padding: 3rem 2.5rem; animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
+        h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff; }
+        .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
 
         input {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            margin-bottom: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            color: white;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            width: 100%; padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+            background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-glass);
+            border-radius: 12px; color: white; font-size: 0.95rem;
+            font-family: inherit; transition: all 0.3s;
         }
 
-        input:focus {
-            outline: none;
-            border-color: #00C9FF;
-            box-shadow: 0 0 0 3px rgba(0, 201, 255, 0.1);
-        }
+        input:focus { outline: none; border-color: var(--accent-cyan); background: rgba(0,0,0,0.5); box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.15); }
 
         button {
-            width: 100%;
-            padding: 0.9rem;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
+            width: 100%; padding: 1.1rem; border-radius: 12px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: all 0.3s; border: none;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #00C9FF, #92FE9D);
-            color: #0a0e27;
-            box-shadow: 0 4px 15px rgba(0, 201, 255, 0.3);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green)); color: #000;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 201, 255, 0.4);
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4); }
 
         /* Welcome Section */
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+        .welcome-section { text-align: center; margin-bottom: 3rem; animation: popIn 0.8s ease; }
         .welcome-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #00C9FF);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;
+            background: linear-gradient(to right, #fff, var(--accent-cyan));
+            -webkit-background-clip: text; color: transparent;
         }
 
         .badge-count {
-            display: inline-block;
-            background: rgba(0, 201, 255, 0.2);
-            padding: 0.5rem 1.5rem;
-            border-radius: 40px;
-            margin-top: 1rem;
+            display: inline-flex; align-items: center; gap: 0.8rem;
+            background: rgba(0, 242, 254, 0.05); padding: 0.5rem 1.5rem;
+            border-radius: 40px; border: 1px solid rgba(0, 242, 254, 0.2);
+            font-size: 1rem; color: #fff;
         }
 
-        .badge-count strong {
-            font-size: 2rem;
-            color: #00C9FF;
-            margin-right: 0.5rem;
-        }
+        .badge-count strong { font-size: 2rem; color: var(--accent-cyan); font-weight: 800; }
 
-        /* Badge Grid */
+        /* Badge Cards Layout */
+        .section-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem; color: #fff; }
+        
         .badge-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem; margin-bottom: 3rem;
         }
 
         .badge-card {
-            animation: popIn 0.5s ease forwards;
-            transition: transform 0.3s ease;
+            display: flex; flex-direction: column;
+            padding: 2rem; transition: transform 0.3s, box-shadow 0.3s;
+            animation: popIn 0.6s ease backwards;
         }
+        
+        .badge-card:nth-child(2) { animation-delay: 0.1s; }
+        .badge-card:nth-child(3) { animation-delay: 0.2s; }
 
-        .badge-card:hover {
-            transform: translateY(-5px);
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
+        .badge-card:hover { transform: translateY(-6px); }
 
         .badge-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 1rem;
+            width: 65px; height: 65px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; margin-bottom: 1.5rem;
         }
 
-        .tier-rising-star .badge-icon {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
+        .tier-rising-star { border-top: 4px solid #FBBF24; }
+        .tier-rising-star .badge-icon { background: rgba(251, 191, 36, 0.1); color: #FBBF24; box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
+        .tier-excellence { border-top: 4px solid var(--accent-cyan); }
+        .tier-excellence .badge-icon { background: rgba(0, 242, 254, 0.1); box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
+        .tier-legend { border-top: 4px solid #A855F7; }
+        .tier-legend .badge-icon { background: rgba(168, 85, 247, 0.1); box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
 
-        .tier-excellence .badge-icon {
-            background: linear-gradient(135deg, #00C9FF, #92FE9D);
-            box-shadow: 0 0 20px rgba(0, 201, 255, 0.3);
-        }
-
-        .tier-legend .badge-icon {
-            background: linear-gradient(135deg, #8E2DE2, #4A00E0);
-            box-shadow: 0 0 20px rgba(142, 45, 226, 0.4);
-        }
-
-        .b-title {
-            font-weight: 800;
-            font-size: 1.3rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .b-date {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            margin-bottom: 0.8rem;
-        }
-
+        .b-title { font-weight: 800; font-size: 1.4rem; color: #fff; margin-bottom: 0.4rem; }
+        .b-date { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; margin-bottom: 1.2rem; }
         .b-msg {
-            font-style: italic;
-            color: #cbd5e1;
-            margin: 1rem 0;
-            padding-left: 0.75rem;
-            border-left: 3px solid #00C9FF;
+            font-style: italic; color: #cbd5e1; line-height: 1.5; margin-bottom: 1.5rem;
+            padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 12px; border-left: 3px solid var(--accent-cyan);
         }
+        
+        .b-impact { margin-top: auto; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+        .b-impact strong { color: #fff; display: block; margin-bottom: 0.3rem; }
+        .b-awaits { font-size: 0.85rem; font-weight: 600; margin-top: 1rem; color: var(--accent-cyan); display: flex; gap: 0.5rem; align-items: center; }
 
-        .b-impact {
-            font-size: 0.85rem;
-            margin-top: 0.8rem;
-            padding-top: 0.8rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .b-awaits {
-            font-size: 0.8rem;
-            color: #00C9FF;
+        /* Blackmark Cards */
+        .blackmark-card { border-top: 4px solid #f43f5e; background: linear-gradient(180deg, rgba(244, 63, 94, 0.05), rgba(15, 23, 42, 0.6)); }
+        
+        .blackmark-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+        .blackmark-header span[style] { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 16px; line-height: 1; }
+        
+        .blackmark-severity {
+            display: inline-block; font-size: 0.75rem; padding: 0.3rem 0.8rem;
+            border-radius: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
             margin-top: 0.5rem;
         }
 
-        /* Blackmark Section */
-        .blackmarks-section {
-            margin-top: 2rem;
-        }
+        .severity-minor { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .severity-moderate { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .severity-severe { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
 
-        .blackmark-card {
-            border-left: 4px solid #ff6b6b;
-            background: rgba(255, 107, 107, 0.05);
-        }
+        .blackmark-message { padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 12px; border-left: 3px solid #f43f5e; margin-bottom: 1.5rem; color: #cbd5e1; line-height: 1.5;}
 
-        .blackmark-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .blackmark-severity {
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .severity-minor { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .severity-moderate { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-        .severity-severe { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-
-        .blackmark-message {
-            color: #cbd5e1;
-            margin: 0.8rem 0;
-            padding-left: 0.75rem;
-            border-left: 3px solid #ff6b6b;
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 201, 255, 0.3), transparent);
-            margin: 1.5rem 0;
-        }
+        hr { border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 3rem 0; }
 
         @media (max-width: 768px) {
-            .navbar { padding: 1rem 1.5rem; }
-            .container { padding: 0 1rem; }
-            .welcome-title { font-size: 1.8rem; }
+            .navbar { padding: 1rem; }
+            .container { padding: 1rem; }
+            .welcome-title { font-size: 2.2rem; }
             .badge-grid { grid-template-columns: 1fr; }
+            .glass-panel { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+    </div>
+
     <nav class="navbar">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <img src="tq.jpeg" alt="TechQuanta Logo" style="height: 40px; width: auto; border-radius: 8px;">
-            <h2>🏅 TechQuanta <span class="highlight">Hall of Excellence</span></h2>
+            <img src="tq.jpeg" alt="Logo" style="height: 36px; width: auto; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+            <h2>TechQuanta <span class="highlight">Hall of Excellence</span></h2>
         </div>
-        <button id="logoutBtn" class="logout-btn" style="display: none;">🚪 Logout</button>
+        <button id="logoutBtn" class="logout-btn" style="display: none;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            Logout
+        </button>
     </nav>
 
     <div class="container" id="loginSection">
         <div class="glass-panel centered-panel">
-            <h3>🌟 Intern Login</h3>
-            <p class="subtitle">Access your achievements and feedback</p>
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🌟</div>
+            <h3>Intern Portal</h3>
+            <p class="subtitle">Access your professional legacy</p>
             <input type="email" id="email" placeholder="Email Address">
             <input type="password" id="password" placeholder="Password">
-            <button id="loginBtn" class="btn-primary">✨ View My Legacy</button>
+            <button id="loginBtn" class="btn-primary">View My Journey</button>
         </div>
     </div>
 
     <div class="container" id="dashboardSection" style="display: none;">
-        <!-- Welcome Section -->
         <div class="welcome-section">
-            <div class="glass-panel">
-                <div class="welcome-title" id="welcomeText">Welcome, Intern.</div>
+            <div class="glass-panel" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none;">
+                <div class="welcome-title" id="welcomeText">Welcome.</div>
                 <div class="badge-count">
-                    <strong id="badgeCount">0</strong> Badges of Excellence
+                    <strong id="badgeCount">0</strong> Excellence Awards
                 </div>
             </div>
         </div>
 
-        <!-- Badges Section -->
-        <div class="section-title">
-            <span>🏆</span> Your Achievements
-        </div>
+        <div class="section-title">🏆 Distinctions & Awards</div>
         <div class="badge-grid" id="badgeContainer">
-            <p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">Your legacy begins soon. Awaiting your first badge.</p>
+            <div class="glass-panel" style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem;">
+                <div style="font-size: 2rem; opacity: 0.5; margin-bottom: 1rem;">🌱</div>
+                <p style="color: var(--text-muted);">Your legacy begins soon. Awaiting your first badge.</p>
+            </div>
         </div>
 
         <hr>
 
-        <!-- Blackmarks Section -->
-        <div class="section-title">
-            <span>⚠️</span> Constructive Feedback
-        </div>
+        <div class="section-title">📈 Growth Areas & Feedback</div>
         <div class="badge-grid" id="blackmarkContainer">
-            <p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">No feedback records. Keep up the great work!</p>
+            <div class="glass-panel" style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem;">
+                <div style="font-size: 2rem; opacity: 0.5; margin-bottom: 1rem;">✨</div>
+                <p style="color: var(--text-muted);">Clean record. Keep up the phenomenal work!</p>
+            </div>
         </div>
     </div>
 
@@ -416,14 +313,13 @@
             if (user) {
                 loginSec.style.display = 'none';
                 dashSec.style.display = 'block';
-                document.getElementById('logoutBtn').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'flex';
                 
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 if(userDoc.exists()) {
-                    document.getElementById('welcomeText').innerText = `✨ Welcome, ${userDoc.data().name}. ✨`;
+                    document.getElementById('welcomeText').innerText = `${userDoc.data().name}`;
                 }
 
-                // Badges Listener
                 const badgesQuery = query(collection(db, "awards"), where("userId", "==", user.uid));
                 badgeListener = onSnapshot(badgesQuery, (snapshot) => {
                     const container = document.getElementById('badgeContainer');
@@ -431,7 +327,7 @@
                     container.innerHTML = '';
 
                     if (snapshot.empty) {
-                        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">Your legacy begins soon. Awaiting your first badge.</p>';
+                        container.innerHTML = '<div class="glass-panel" style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem;"><div style="font-size: 2rem; opacity: 0.5; margin-bottom: 1rem;">🌱</div><p style="color: var(--text-muted);">Your legacy begins soon. Awaiting your first badge.</p></div>';
                         return;
                     }
 
@@ -442,29 +338,31 @@
                     awards.forEach((data) => {
                         const bData = badgeData[data.badgeType];
                         if (!bData) return;
-                        const date = new Date(data.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                        const date = new Date(data.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
                         container.innerHTML += `
                             <div class="glass-panel badge-card ${bData.class}">
                                 <div class="badge-icon">${bData.icon}</div>
                                 <div class="b-title">${bData.title}</div>
-                                <div class="b-date">Awarded on ${date}</div>
+                                <div class="b-date">Awarded ${date}</div>
                                 <div class="b-msg">"${escapeHtml(data.message)}"</div>
-                                <div class="b-impact"><strong>Your Impact:</strong><br/>${bData.impact}</div>
-                                <div class="b-awaits">🔒 ${bData.awaits}</div>
+                                <div class="b-impact"><strong>Your Impact:</strong>${bData.impact}</div>
+                                <div class="b-awaits">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                                    ${bData.awaits}
+                                </div>
                             </div>
                         `;
                     });
                 });
 
-                // Blackmarks Listener
                 const blackmarksQuery = query(collection(db, "blackmarks"), where("userId", "==", user.uid));
                 blackmarkListener = onSnapshot(blackmarksQuery, (snapshot) => {
                     const container = document.getElementById('blackmarkContainer');
                     container.innerHTML = '';
 
                     if (snapshot.empty) {
-                        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; opacity: 0.5; padding: 2rem;">No feedback records. Keep up the great work!</p>';
+                        container.innerHTML = '<div class="glass-panel" style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem;"><div style="font-size: 2rem; opacity: 0.5; margin-bottom: 1rem;">✨</div><p style="color: var(--text-muted);">Clean record. Keep up the phenomenal work!</p></div>';
                         return;
                     }
 
@@ -475,21 +373,21 @@
                     blackmarks.forEach((data) => {
                         const sData = severityData[data.severity];
                         if (!sData) return;
-                        const date = new Date(data.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                        const date = new Date(data.timestamp).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
                         container.innerHTML += `
                             <div class="glass-panel badge-card blackmark-card">
                                 <div class="blackmark-header">
-                                    <span style="font-size: 1.5rem;">${sData.icon}</span>
-                                    <div>
-                                        <div class="b-title" style="font-size: 1.1rem;">${sData.label} Blackmark</div>
-                                        <div class="b-date">Issued on ${date}</div>
+                                    <span style="font-size: 1.8rem;">${sData.icon}</span>
+                                    <div style="flex: 1;">
+                                        <div class="b-title" style="font-size: 1.2rem;">Feedback Log</div>
+                                        <div class="b-date">Issued ${date}</div>
+                                        <span class="blackmark-severity ${sData.class}">${sData.label}</span>
                                     </div>
-                                    <span class="blackmark-severity ${sData.class}">${sData.label}</span>
                                 </div>
                                 <div class="blackmark-message">"${escapeHtml(data.message)}"</div>
-                                <div class="b-impact" style="border-top-color: rgba(255, 107, 107, 0.3);">
-                                    <strong>Growth Opportunity:</strong><br/>${sData.text}
+                                <div class="b-impact" style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(244, 63, 94, 0.2);">
+                                    <strong style="color: #f43f5e;">Growth Opportunity:</strong>${sData.text}
                                 </div>
                             </div>
                         `;
@@ -519,7 +417,7 @@
             try {
                 await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
             } catch (e) { 
-                alert("Login failed. Please check your credentials. (" + e.message + ")"); 
+                alert("Login failed. Please check your credentials."); 
             }
         });
 
